@@ -35,8 +35,8 @@
       update_time)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, 
-      #{answer,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, noew(),
-      noew())
+      #{answer,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, now(),
+      now())
   </insert>
   <insert id="insertSelective" parameterType="com.rmall.pojo.User" >
     insert into rmall_user
@@ -98,10 +98,10 @@
         #{role,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
-        noew(),
+        now(),
       </if>
       <if test="updateTime != null" >
-        noew(),
+        now(),
       </if>
     </trim>
   </insert>
@@ -133,7 +133,7 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
-        update_time = noew(),
+        update_time = now(),
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -148,13 +148,18 @@
       answer = #{answer,jdbcType=VARCHAR},
       role = #{role,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = noew()
+      update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
+
   <select id="checkUsername" resultType="int" parameterType="string" >
     SELECT count(1) FROM  rmall_user
     WHERE username = #{username}
+  </select>
+
+  <select id="checkEmail" resultType="int" parameterType="string" >
+    SELECT count(1) FROM  rmall_user
+    WHERE email = #{email}
   </select>
   
   <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
@@ -163,5 +168,33 @@
     FROM rmall_user
     WHERE username = #{username}
     and password = #{password}
+  </select>
+
+  <select id="selectQuestionByUsername" resultType="string" parameterType="string">
+    SELECT
+    question
+    FROM rmall_user
+    WHERE username = #{username}
+  </select>
+
+  <select id="checkAnswer" resultType="int" parameterType="map">
+    SELECT
+    count(1)
+    FROM rmall_user
+    WHERE username = #{username}
+    and question = #{question}
+    and answer = #{answer}
+  </select>
+
+  <update id="updatePassword" parameterType="map">
+    UPDATE rmall_user
+    SET password = #{password}, update_time = now()
+    where username = #{username}
+  </update>
+  
+  <select id="checkEmailByUserId" resultType="int" parameterType="map">
+    SELECT  COUNT(1) FROM rmall_user
+    WHERE email = #{email}
+    and id != #{userId}
   </select>
 </mapper>
