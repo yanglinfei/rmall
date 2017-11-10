@@ -1,6 +1,9 @@
 package com.rmall.dao;
 
 import com.rmall.pojo.Category;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,6 @@ public interface CategoryMapper {
     int updateByPrimaryKeySelective(Category record);
 
     int updateByPrimaryKey(Category record);
+
+    List<Category> selectCategoryChildrenByParrentId(@Param("parent_id") Integer parent_id);
 }
