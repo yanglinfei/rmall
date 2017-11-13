@@ -1,6 +1,10 @@
 package com.rmall.dao;
 
 import com.rmall.pojo.Product;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +18,10 @@ public interface ProductMapper {
     int updateByPrimaryKeySelective(Product record);
 
     int updateByPrimaryKey(Product record);
+
+    List<Product> selectList();
+
+    List<Product> selectByProductNameAndProductId(@Param("productName") String productName, @Param("productId") Integer productId);
+
+    List<Product> selectByNameAndCategoryIds(@Param("productName") String productName, @Param("categoryIdList") List<Integer> categoryIdList);
 }

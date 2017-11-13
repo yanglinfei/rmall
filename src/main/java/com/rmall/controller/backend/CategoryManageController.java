@@ -46,7 +46,7 @@ public class CategoryManageController {
 
     @RequestMapping("set_category_name.do")
     @ResponseBody
-    public ServerResponse setCateGoryname(HttpSession session,Integer categoryId, String categoryName) {
+    public ServerResponse setCategoryName(HttpSession session,Integer categoryId, String categoryName) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
@@ -78,7 +78,7 @@ public class CategoryManageController {
 
     @RequestMapping("get_deep_category.do")
     @ResponseBody
-    public ServerResponse getCategaryAndDeepChildrenCategary(HttpSession session,@RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
+    public ServerResponse getCategaryAndDeepChildrenCategory(HttpSession session,@RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
