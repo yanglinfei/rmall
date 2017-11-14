@@ -42,6 +42,7 @@ public class CategoryManageController {
         } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
+        
     }
 
     @RequestMapping("set_category_name.do")

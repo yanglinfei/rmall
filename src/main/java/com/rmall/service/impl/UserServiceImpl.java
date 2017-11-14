@@ -52,7 +52,7 @@ public class UserServiceImpl implements IUserService {
             return validResponse;
         }
 
-        user.setRole(Const.Role.ROLE_CUSTOMEER);
+        user.setRole(Const.Role.ROLE_CUSTOMER);
         //MD5加密
         user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
 

@@ -17,12 +17,20 @@ public class Const {
     }
 
     public interface Role{
-        int ROLE_CUSTOMEER = 0;
+        int ROLE_CUSTOMER = 0;
         int ROLE_ADMIN = 1;
     }
 
+    public interface Cart{
+        int CHECKED = 1;//购物车中选中状态
+        int UN_CHECKED = 1;//购物车中未选中状态
+
+        String LIMIT_NUM_FAIL = "LIMIT_NUM_FAIL";
+        String LIMIT_NUM_SUCCESS = "LIMIT_NUM_SUCCESS";
+    }
+
     public enum ProductStatusEnum {
-        ON_SELE(1,"在线");
+        ON_SALE(1,"在线");
         private String value;
         private int code;
 
