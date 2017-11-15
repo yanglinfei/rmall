@@ -53,8 +53,8 @@ public class CartServiceImpl implements ICartService {
             cartMapper.updateByPrimaryKeySelective(cart);
         }
 
-        CartVo cartVo = this.getCartVoLimit(userId);
-        return ServerResponse.createBySuccess(cartVo);
+
+        return this.list(userId);
     }
 
     public ServerResponse<CartVo> update(Integer userId, Integer productId, Integer count) {
@@ -68,8 +68,7 @@ public class CartServiceImpl implements ICartService {
         }
 
         cartMapper.updateByPrimaryKeySelective(cart);
-        CartVo cartVo = this.getCartVoLimit(userId);
-        return ServerResponse.createBySuccess(cartVo);
+        return this.list(userId);
     }
 
     public ServerResponse<CartVo> delete(Integer userId, String productIds) {
@@ -80,10 +79,28 @@ public class CartServiceImpl implements ICartService {
         }
 
         cartMapper.deleteCartProductByUserIdAndProductIds(userId,productList);
+
+        return this.list(userId);
+    }
+
+    public ServerResponse<CartVo> list(Integer userId) {
         CartVo cartVo = this.getCartVoLimit(userId);
         return ServerResponse.createBySuccess(cartVo);
     }
 
+    public ServerResponse<CartVo> selectOrUnSelect(Integer userId, Integer productId, Integer checked) {
+        cartMapper.checkedOrUncheckedProduct(userId, productId, checked);
+
+        return this.list(userId);
+    }
+
+    public ServerResponse<Integer> getCartProductCount(Integer userId) {
+        if ( userId == null) {
+            return ServerResponse.createBySuccess(0);
+        }
+
+        return ServerResponse.createBySuccess(cartMapper.selectCartProductCount(userId));
+    }
 
 
 
@@ -117,6 +134,7 @@ public class CartServiceImpl implements ICartService {
                     int buyLimitCount = 0;
                     if (product.getStock() >= cartItem.getQuantity()) {
                         cartProductVo.setLimitQuantity(Const.Cart.LIMIT_NUM_SUCCESS);
+                        buyLimitCount = cartItem.getQuantity();
                     } else {
                         buyLimitCount = product.getStock();
                         cartProductVo.setLimitQuantity(Const.Cart.LIMIT_NUM_FAIL);
