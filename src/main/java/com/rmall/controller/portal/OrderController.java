@@ -85,24 +85,6 @@ public class OrderController {
         return iOrderService.getOrderList(user.getId(), pageNum, pageSize);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @RequestMapping("pay.do")
     @ResponseBody
     public ServerResponse pay(HttpSession session, Long orderNo, HttpServletRequest request) {

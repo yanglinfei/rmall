@@ -1,6 +1,5 @@
 package com.rmall.util;
 
-import com.sun.xml.internal.stream.dtd.DTDGrammarUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
